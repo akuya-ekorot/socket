@@ -10,10 +10,12 @@ export default function Home() {
   }, []);
 
   const socketInitializer = async () => {
-    await fetch('http://localhost:8000');
-    socket = io();
+    socket = io('http://localhost:8000');
     socket.on('connect', () => {
       console.log('connected');
+    });
+    socket.on('update-input', input => {
+      setValue(input);
     });
   }
 
@@ -24,8 +26,8 @@ export default function Home() {
   };
 
   return (
-    <div>
-      <input type="text" value={value} onChange={handleChange} />
+    <div className="w-full h-screen flex items-center justify-center">
+      <input className="text-slate-900 rounded p-3" type="text" value={value} onChange={handleChange} />
     </div>
   )
 }
